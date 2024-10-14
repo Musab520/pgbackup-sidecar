@@ -1,0 +1,40 @@
+version: "3.9"
+networks:
+  postgres:
+    external: false
+
+services:
+  postgres:
+    image: postgres:15
+    platform: linux/amd64
+    restart: "no"
+    volumes:
+      - ./.data/postgres:/home/postgres/pgdata/data
+    networks:
+      - postgres
+    ports:
+      - 127.0.0.1:15432:5432
+    expose:
+      - 5432
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+
+  pgbackup:
+   image: musab520/pgbackup-sidecar:latest
+   platform: linux/amd64
+   restart: "no"
+   volumes:
+     - ./.data/dumps:/opt/dumps
+   networks:
+     - postgres
+   environment:
+    - POSTGRES_PASSWORD=postgres
+    - POSTGRES_DB=postgres
+    - POSTGRES_USER=postgres
+    - POSTGRES_HOST=postgres
+    - POSTGRES_PORT=5432
+    - CRON_TIME=* * * * *
+    - ROTATION_TIME=180
+   depends_on:
+     - postgres
