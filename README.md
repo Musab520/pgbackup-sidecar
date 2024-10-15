@@ -37,4 +37,5 @@ docker logs -f dev-pgbackup-1
 | `ROTATION_TIME`           | Seconds in epoch for how the time interval the backups should be maintained (e.g., 86400 for 24 hours) |
 | `WEBHOOK_URL`           | Sends a json body of title and description(logs) to a webhook provided (optional) |
 | `TITLE`           | Sets the title for whats being sent with the Webhook URL (optional) |
+| `DISABLE`         | disbales script (optional) |
 

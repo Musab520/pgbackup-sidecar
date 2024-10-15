@@ -5,7 +5,7 @@ PGPASSWORD=$POSTGRES_PASSWORD psql -h $POSTGRES_HOST -d $POSTGRES_DB -U $POSTGRE
 
 envsubst '${CRON_TIME}' < /opt/crontab > /opt/scripts/crontab
 
-envsubst '${POSTGRES_USER} ${POSTGRES_PASSWORD} ${POSTGRES_DB} ${POSTGRES_HOST} ${POSTGRES_PORT} ${WEBHOOK_URL}' < /opt/backup.sh > /opt/scripts/backup.sh
+envsubst '${POSTGRES_USER} ${POSTGRES_PASSWORD} ${POSTGRES_DB} ${POSTGRES_HOST} ${POSTGRES_PORT} ${WEBHOOK_URL} ${DISABLE}' < /opt/backup.sh > /opt/scripts/backup.sh
 
 chmod +x /opt/scripts/backup.sh;
 
