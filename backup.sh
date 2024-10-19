@@ -1,13 +1,15 @@
 #!/bin/bash
 if [ "$DISABLE" != "true" ]; then
-whoami;
-cd /opt/dumps;
+  set -o pipefail
+  whoami;
+  cd /opt/dumps;
 
-mkdir -p /opt/dumps/$POSTGRES_HOST;
-PGPASSWORD=$POSTGRES_PASSWORD pg_dumpall -h $POSTGRES_HOST -U $POSTGRES_USER -p $POSTGRES_PORT -c -v --if-exists | gzip > /opt/dumps/${POSTGRES_HOST}/$(date -Iseconds).sql.gz;
+  mkdir -p /opt/dumps/$POSTGRES_HOST;
 
-timestamp=$(date +"%Y-%m-%d %H:%M:%S")
-subject=$(echo "$TITLE - $timestamp")
+  timestamp=$(date +"%Y-%m-%d %H:%M:%S")
+  subject=$(echo "$TITLE - $timestamp")
+
+  PGPASSWORD=$POSTGRES_PASSWORD pg_dumpall -h $POSTGRES_HOST -U $POSTGRES_USER -p $POSTGRES_PORT -c -v --if-exists | gzip > /opt/dumps/${POSTGRES_HOST}/$(date -Iseconds).sql.gz;
 
   if [ $? -eq 0 ]; then
     echo "Dump executed successfully."
