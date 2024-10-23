@@ -1,10 +1,10 @@
 # pgbackup-sidecar
 
-`pgbackup-sidecar` is a lightweight Docker sidecar container designed to automate regular backups of a PostgreSQL database using `pg_dumpall`. The container runs a cron job that periodically dumps the database and stores the backups to a backup directory of your choice and even optionally send logs to a webhook. Currently working on backing up to S3 and other versions of postgres and adding more advanced options for pg_dump.
+`pgbackup-sidecar` is a lightweight Docker sidecar container designed to automate regular backups of a PostgreSQL database using `pg_dump`. The container runs a cron job that periodically dumps the database and stores the backups to a backup directory of your choice and even optionally send logs to a webhook. Currently working on backing up to S3 and other versions of postgres and adding more advanced options for pg_dump.
 
 ## Features
 
-- Automated PostgreSQL backups using `pg_dumpall` and `gzip`.
+- Automated PostgreSQL backups using `pg_dump`.
 - Configurable backup schedule with `crontab`.
 - Optionally send logs to a webhook
 

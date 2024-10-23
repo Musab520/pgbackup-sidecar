@@ -3,7 +3,7 @@ BACKUP_DOCKER_REPOSITORY=$(DOCKER_REGISTRY)/pgbackup-sidecar
 DOCKER_TAG=latest
 
 package-backup:
-	docker build --no-cache --quiet -t $(BACKUP_DOCKER_REPOSITORY):$(DOCKER_TAG) -f backup.dockerfle .
+	docker build --no-cache --quiet -t $(BACKUP_DOCKER_REPOSITORY):$(DOCKER_TAG) .
 
 publish-backup:
 	docker push --quiet $(BACKUP_DOCKER_REPOSITORY):$(DOCKER_TAG)

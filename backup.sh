@@ -8,8 +8,8 @@ if [ "$DISABLE" != "true" ]; then
 
   timestamp=$(date +"%Y-%m-%d %H:%M:%S")
   subject=$(echo "$TITLE - $timestamp")
-
-  PGPASSWORD=$POSTGRES_PASSWORD pg_dumpall -h $POSTGRES_HOST -U $POSTGRES_USER -p $POSTGRES_PORT -c -v --if-exists | gzip > /opt/dumps/${POSTGRES_HOST}/$(date -Iseconds).sql.gz;
+  
+  PGPASSWORD=$POSTGRES_PASSWORD pg_dump -h $POSTGRES_HOST -U $POSTGRES_USER -p $POSTGRES_PORT --format=custom --clean --verbose --create --file /opt/dumps/${POSTGRES_HOST}/$(date -Iseconds).pgdump $POSTGRES_DB
 
   if [ $? -eq 0 ]; then
     echo "Dump executed successfully."
@@ -37,7 +37,7 @@ if [ "$DISABLE" != "true" ]; then
   current_date=$(date +%s);
   threshold_date_in_epoch=$(($current_date - $ROTATION_TIME));
   cd /opt/dumps/${POSTGRES_HOST}/;
-  for file in *.sql.gz; do
+  for file in *.pgdump; do
       file_date=$(echo "$file" | cut -d'.' -f1);
       file_date_in_epoch=$(date -d"$file_date" +%s);
       if [ "$file_date_in_epoch" -le "$threshold_date_in_epoch" ]; then
