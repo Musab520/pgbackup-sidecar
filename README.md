@@ -19,6 +19,41 @@
 
 ### 1. Running the Demo
 
+#### Docker Pull Commands
+
+To pull the images for both PostgreSQL and the pgbackup-sidecar:
+
+```bash
+docker pull postgres:15
+docker pull musab520/pgbackup-sidecar:latest
+docker run -d \
+  --name postgres \
+  --platform linux/amd64 \
+  -v $(pwd)/.data/postgres:/home/postgres/pgdata/data \
+  --network=postgres_network \
+  -p 127.0.0.1:15432:5432 \
+  -e POSTGRES_PASSWORD=postgres \
+  -e POSTGRES_DB=postgres \
+  postgres:15
+
+docker run -d \
+  --name pgbackup \
+  --platform linux/amd64 \
+  -v $(pwd)/.data/dumps:/opt/dumps \
+  --network=postgres_network \
+  -e POSTGRES_PASSWORD=postgres \
+  -e POSTGRES_DB=postgres \
+  -e POSTGRES_USER=postgres \
+  -e POSTGRES_HOST=postgres \
+  -e POSTGRES_PORT=5432 \
+  -e CRON_TIME="* * * * *" \
+  -e ROTATION_TIME=180 \
+  musab520/pgbackup-sidecar:latest
+```
+### OR
+
+#### Clone the Repository and use make and docker compose
+
 ```bash
 git clone git@github.com:Musab520/pgbackup-sidecar.git
 make sidecar-stack
