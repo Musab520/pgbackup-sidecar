@@ -19,9 +19,7 @@
 
 ### 1. Running the Demo
 
-#### Docker Pull Commands
-
-To pull the images for both PostgreSQL and the pgbackup-sidecar:
+#### Docker Pull And Run Commands
 
 ```bash
 docker pull postgres:15
