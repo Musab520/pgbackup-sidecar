@@ -6,6 +6,7 @@
 
 - Automated PostgreSQL backups using `pg_dump`.
 - Configurable backup schedule with `crontab`.
+- Configurable rotation time
 - Optionally send logs to a webhook
 
 ## Prerequisites
